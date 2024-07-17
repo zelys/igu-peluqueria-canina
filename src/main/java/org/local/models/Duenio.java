@@ -11,13 +11,13 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode(of = "id")
 public class Duenio {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombreDuenio;
     private String telefono;
 
-    @OneToMany
-    private List<Mascota> mascotas;
 }

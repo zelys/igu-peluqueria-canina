@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode(of = "id")
 public class Mascota {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,13 +19,24 @@ public class Mascota {
     private String nombreMascota;
     private String raza;
     private String color;
+    @Column(columnDefinition = "TINYINT")
     private Boolean alergico;
+    @Column(columnDefinition = "TINYINT")
     private Boolean atencionEspecial;
+    @Column(columnDefinition = "TEXT")
     private String observaciones;
 
     private LocalDate fechaRegistro = LocalDate.now();
     private LocalDate fechaModificacion = LocalDate.now();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Duenio duenio;
+
+    public void setAlergico(String alergico) {
+        this.alergico = alergico.equalsIgnoreCase("SI");
+    }
+
+    public void setAtencionEspecial(String atencionEspecial) {
+        this.atencionEspecial = atencionEspecial.equalsIgnoreCase("SI");
+    }
 }

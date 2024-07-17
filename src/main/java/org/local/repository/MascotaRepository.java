@@ -1,22 +1,17 @@
 package org.local.repository;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
+import jakarta.persistence.*;
 import org.local.models.Mascota;
+
+import java.util.List;
 
 public class MascotaRepository {
 
     private EntityManager em;
     private EntityManagerFactory eMF;
+    private String pu = "peluCaninaPU";
 
     public MascotaRepository() {
-        this.eMF = Persistence.createEntityManagerFactory("peluCaninaPU");
-        this.em = this.eMF.createEntityManager();
-    }
-
-    public MascotaRepository(String pu) {
         this.eMF = Persistence.createEntityManagerFactory(pu);
         this.em = this.eMF.createEntityManager();
     }
@@ -56,5 +51,9 @@ public class MascotaRepository {
     public void close() {
         this.em.close();
         this.eMF.close();
+    }
+
+    public List<Mascota> findAllMascotas() {
+        return this.em.createQuery("from Mascota", Mascota.class).getResultList();
     }
 }

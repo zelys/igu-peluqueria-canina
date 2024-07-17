@@ -13,3 +13,5 @@ App desarrollada con Java Swing con conexión a base de datos MySQL.
 - MySQL Driver
 - Hibernate
 - Lombok
+
+[![En Desarrollo](https://img.shields.io/badge/Estado-En%20Desarrollo-yellow?style=for-the-badge&logo=codecov&logoColor=white)](https://github.com/tu-usuario/tu-repositorio)

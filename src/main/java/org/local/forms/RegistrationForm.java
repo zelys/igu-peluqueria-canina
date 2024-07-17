@@ -1,11 +1,12 @@
 package org.local.forms;
 
 import org.local.controller.PersistenceControl;
-import org.local.models.RegistroMascota;
+import org.local.models.Duenio;
+import org.local.models.Mascota;
 
 import javax.swing.*;
 
-public class FormRegistro extends JFrame {
+public class RegistrationForm extends JFrame {
 
     PersistenceControl controller = new PersistenceControl();
 
@@ -19,11 +20,11 @@ public class FormRegistro extends JFrame {
     private JTextField nombreDuenioField;
     private JTextField telefonoField;
     private JTextArea observacionesTextArea;
-    private JPanel buttonPane;
     private JButton limpiarButton;
     private JButton guardarButton;
 
-    public FormRegistro() {
+    public RegistrationForm() {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Registro de Mascotas");
         setContentPane(contentPane);
         pack();
@@ -32,17 +33,19 @@ public class FormRegistro extends JFrame {
 
         // GUARDAR DATOS DEL FORMULARIO
         guardarButton.addActionListener(e -> {
-            RegistroMascota registro = new RegistroMascota();
-            registro.setNombreMascota(nombreMascotaField.getText());
-            registro.setRaza(razaField.getText());
-            registro.setColor(colorField.getText());
-            registro.setAlergico(alergicoComboBox.getSelectedItem().toString());
-            registro.setAtencionEspecial(ateEspecialComboBox.getSelectedItem().toString());
-            registro.setNombreDuenio(nombreDuenioField.getText());
-            registro.setTelefono(telefonoField.getText());
-            registro.setObservaciones(observacionesTextArea.getText());
+            Mascota mascota = new Mascota();
+            Duenio duenio = new Duenio();
+            mascota.setNombreMascota(nombreMascotaField.getText());
+            mascota.setRaza(razaField.getText());
+            mascota.setColor(colorField.getText());
+            mascota.setAlergico(alergicoComboBox.getSelectedItem().toString());
+            mascota.setAtencionEspecial(ateEspecialComboBox.getSelectedItem().toString());
+            mascota.setObservaciones(observacionesTextArea.getText());
+            duenio.setNombreDuenio(nombreDuenioField.getText());
+            duenio.setTelefono(telefonoField.getText());
+            mascota.setDuenio(duenio);
 
-            controller.save(registro);
+            controller.save(mascota);
 
             JOptionPane.showMessageDialog(contentPane, "Registro guardado exitosamente");
         });
