@@ -9,8 +9,8 @@ public class App {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 MainForm form = new MainForm();
-                form.setVisible(true);
                 form.setLocationRelativeTo(null);
+                form.setVisible(true);
             }
         });
     }

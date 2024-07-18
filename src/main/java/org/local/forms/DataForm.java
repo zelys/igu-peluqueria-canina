@@ -1,6 +1,6 @@
 package org.local.forms;
 
-import org.local.controller.PersistenceControl;
+import org.local.controller.Controller;
 import org.local.models.Mascota;
 
 import javax.swing.*;
@@ -10,13 +10,13 @@ import java.util.List;
 
 public class DataForm extends JFrame {
     private JPanel contentPane;
-    private JPanel tablePane;
     private JTable dataTable;
     private JButton editButton;
     private JButton deleteButton;
 
-    private PersistenceControl control = new PersistenceControl();
-    private EditForm editForm = new EditForm();
+    private MainForm mainForm;
+    private EditForm editForm;
+    private Controller controller;
 
     public DataForm() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -32,6 +32,16 @@ public class DataForm extends JFrame {
             }
         });
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                mainForm = new MainForm();
+                // POSICIÓN de MainForm AL CERRAR VENTANA
+                mainForm.setLocationRelativeTo(contentPane);
+                mainForm.setVisible(true);
+            }
+        });
+
 
         // BOTÓN BORRAR
         deleteButton.addActionListener(e -> {
@@ -40,7 +50,7 @@ public class DataForm extends JFrame {
                     Long rowId = Long.parseLong(dataTable.getModel()
                             .getValueAt(dataTable.getSelectedRow(), 0).toString());
 
-                    control.remove(rowId);
+                    controller.deleteMascota(rowId);
 
                     JOptionPane.showMessageDialog(null, "Registro eliminado exitosamente",
                             "Ok", JOptionPane.INFORMATION_MESSAGE);
@@ -67,21 +77,11 @@ public class DataForm extends JFrame {
                     Long rowId = Long.parseLong(dataTable.getModel()
                             .getValueAt(dataTable.getSelectedRow(), 0).toString());
                     // CARGAR DATOS EN EL FORMULARIO Y HACER VISIBLE
-                    editForm.loadData(rowId);
-                    editForm.setVisible(true);
+                    editForm = new EditForm(rowId);
                     editForm.setLocationRelativeTo(contentPane);
-                    // OCULTAR VENTANA DataForm
+                    editForm.setVisible(true);
+                    // CERRAR VENTANA DataForm
                     dispose();
-                    // HACER VISIBLE DataForm CUANDO SE CIERRA LA VENTANA
-                    editForm.addWindowListener(new WindowAdapter() {
-                        @Override
-                        public void windowClosing(WindowEvent e) {
-                            setVisible(true);
-                            setLocationRelativeTo(editForm);
-                        }
-                    });
-
-
                 } else {
                     JOptionPane.showMessageDialog(null, "Debe seleccionar un registro",
                             "Error", JOptionPane.ERROR_MESSAGE);
@@ -106,19 +106,20 @@ public class DataForm extends JFrame {
         // ESTABLECER LOS NOMBRES DE LA CABECERA
         tableModel.setColumnIdentifiers(tableHeader);
         // TRAER REGISTROS DE LA BASE DE DATOS
-        List<Mascota> recordsList = control.getDataList();
+        this.controller = new Controller();
+        List<Mascota> listing = controller.listMascotas();
 
-        if (recordsList != null) {
-            for (Mascota d : recordsList) {
+        if (listing != null) {
+            for (Mascota mascota : listing) {
                 Object[] row = {
-                        d.getId(),
-                        d.getNombreMascota(),
-                        d.getRaza(),
-                        d.getColor(),
-                        d.getAlergico(),
-                        d.getAtencionEspecial(),
-                        d.getDuenio().getNombreDuenio(),
-                        d.getDuenio().getTelefono()
+                        mascota.getId(),
+                        mascota.getNombreMascota(),
+                        mascota.getRaza(),
+                        mascota.getColor(),
+                        mascota.getAlergico(),
+                        mascota.getAtencionEspecial(),
+                        mascota.getDuenio().getNombreDuenio(),
+                        mascota.getDuenio().getTelefono()
                 };
                 tableModel.addRow(row);
             }

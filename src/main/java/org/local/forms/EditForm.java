@@ -1,12 +1,9 @@
 package org.local.forms;
 
-import org.local.controller.PersistenceControl;
-import org.local.models.Duenio;
+import org.local.controller.Controller;
 import org.local.models.Mascota;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -22,29 +19,31 @@ public class EditForm extends JFrame {
     private JTextArea obsTextArea;
     private JButton cancelButton;
     private JButton saveButton;
-    private JPanel titlePane;
 
-    private PersistenceControl control = new PersistenceControl();
-    Mascota mascota = new Mascota();
-    Duenio duenio = new Duenio();
-    private Long rowId;
+    private Mascota mascota;
+    private DataForm dataForm;
+    private Controller controller;
 
-    public EditForm() {
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    public EditForm(Long idMascota) {
         setTitle("Modificar Registro");
         setContentPane(contentPane);
         setResizable(false);
         pack();
+        loadData(idMascota);
 
+        // HACER VISIBLE DataForm CUANDO SE CIERRA LA VENTANA
         addWindowListener(new WindowAdapter() {
             @Override
-            public void windowOpened(WindowEvent e) {
-                loadData(rowId);
+            public void windowClosing(WindowEvent e) {
+                dataForm = new DataForm();
+                // POSICIÓN de DataForm AL CERRAR VENTANA
+                dataForm.setLocationRelativeTo(contentPane);
+                dataForm.setVisible(true);
             }
         });
 
         // BOTÓN CANCELAR
-        cancelButton.addActionListener(e -> loadData(rowId));
+        cancelButton.addActionListener(e -> loadData(idMascota));
 
         // BOTÓN GUARDAR
         saveButton.addActionListener(e -> {
@@ -57,15 +56,20 @@ public class EditForm extends JFrame {
             String own = ownField.getText();
             String phone = phoneField.getText();
 
-            control.updateMascota(namePet, race, color, allergic, attSpecial, obs, own, phone);
-            JOptionPane.showMessageDialog(contentPane, "Registro actualizado exitosamente");
+            controller.updateMascota(mascota, namePet, race, color, allergic, attSpecial, obs, own, phone);
+
+            JOptionPane.showMessageDialog(null, "Registro actualizado exitosamente");
+            dispose();
+            dataForm = new DataForm();
+            dataForm.setLocationRelativeTo(contentPane);
+            dataForm.setVisible(true);
         });
     }
 
     // CARGAR DATOS AL FORMULARIO
-    public void loadData(Long rowId) {
-        this.rowId = rowId;
-        mascota = control.getMascota(rowId);
+    public void loadData(Long idMascota) {
+        this.controller = new Controller();
+        this.mascota = controller.findMascotaById(idMascota);
         namePetField.setText(mascota.getNombreMascota());
         raceField.setText(mascota.getRaza());
         colorField.setText(mascota.getColor());

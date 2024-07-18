@@ -45,4 +45,8 @@ public class Mascota {
         this.fechaModificacion = fechaModificacion;
         this.duenio = duenio;
     }
+
+    public void setDuenio(String own, String phone) {
+        this.duenio = new Duenio(own, phone);
+    }
 }

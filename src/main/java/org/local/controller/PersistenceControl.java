@@ -9,40 +9,25 @@ public class PersistenceControl {
 
     MascotaRepository mascotaRepository = new MascotaRepository();
 
-    public PersistenceControl() {
-
-    }
-
     public void save(Mascota mascota) {
         mascotaRepository.addMascota(mascota);
         mascotaRepository.close();
     }
 
-    public List<Mascota> getDataList() {
+    public List<Mascota> listMascotas() {
         return mascotaRepository.findAllMascotas();
     }
 
-    public Mascota getMascota(Long id) {
-        return mascotaRepository.findMascota(id);
+    public Mascota findById(Long id) {
+        return mascotaRepository.findById(id);
     }
 
-    public void remove(Long row) {
-        mascotaRepository.remove(row);
+    public void remove(Long id) {
+        mascotaRepository.remove(id);
     }
 
     public void updateMascota(Mascota mascota) {
         mascotaRepository.update(mascota);
     }
 
-    public void updateMascota(
-            String namePet,
-            String race,
-            String color,
-            Boolean allergic,
-            Boolean attSpecial,
-            String obs,
-            String own,
-            String phone
-    ) {
-    }
 }

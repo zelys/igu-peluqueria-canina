@@ -14,8 +14,8 @@ public class MainForm extends JFrame {
     private JButton btnConsultaRegistro;
     private JButton salirButton;
 
-    private DataForm dataForm = new DataForm();
-    private RegistrationForm registrationForm = new RegistrationForm();
+    private DataForm dataForm;
+    private RegistrationForm registrationForm;
 
     public MainForm() {
         setTitle("Peluquería Canina");
@@ -24,41 +24,24 @@ public class MainForm extends JFrame {
         setResizable(false);
         pack();
 
-
         // BOTÓN REGISTRAR MASCOTA
         btnRegistroMascota.addActionListener(e -> {
-            registrationForm.setVisible(true);
+            registrationForm = new RegistrationForm();
             // POSICIÓN AL ABRIR VENTANA
             registrationForm.setLocationRelativeTo(contentPane);
+            registrationForm.setVisible(true);
             // OCULTAR VENTANA MainForm
             dispose();
-            // HACER VISIBLE MainForm CUANDO SE CIERRA LA VENTANA
-            registrationForm.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    setVisible(true);
-                    // POSICIÓN AL CERRAR VENTANA registrationForm
-                    setLocationRelativeTo(registrationForm);
-                }
-            });
         });
 
         // BOTÓN VER REGISTROS
         btnConsultaRegistro.addActionListener(e -> {
-            dataForm.setVisible(true);
+            dataForm = new DataForm();
             // POSICIÓN AL ABRIR VENTANA DataForm
             dataForm.setLocationRelativeTo(contentPane);
+            dataForm.setVisible(true);
             // OCULTAR VENTANA MainForm
             dispose();
-            // HACER VISIBLE MainForm CUANDO SE CIERRA LA VENTANA
-            dataForm.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    setVisible(true);
-                    // POSICIÓN AL CERRAR VENTANA DataForm
-                    setLocationRelativeTo(dataForm);
-                }
-            });
         });
 
         // FUNCIÓN BOTÓN SALIR

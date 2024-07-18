@@ -52,7 +52,7 @@ public class MascotaRepository {
     }
 
     // TRAER REGISTRO ESPECIFICO
-    public Mascota findMascota(Long id) {
+    public Mascota findById(Long id) {
         return this.em.find(Mascota.class, id);
     }
 

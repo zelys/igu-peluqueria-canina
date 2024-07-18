@@ -1,66 +1,79 @@
 package org.local.forms;
 
-import org.local.controller.PersistenceControl;
-import org.local.models.Duenio;
-import org.local.models.Mascota;
+import org.local.controller.Controller;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class RegistrationForm extends JFrame {
 
-    PersistenceControl controller = new PersistenceControl();
-
     private JPanel contentPane;
-    private JPanel titlePane;
-    private JTextField nombreMascotaField;
-    private JTextField razaField;
+    private JTextField namePetField;
+    private JTextField raceField;
     private JTextField colorField;
-    private JTextField nombreDuenioField;
-    private JTextField telefonoField;
-    private JTextArea observacionesTextArea;
+    private JTextField ownField;
+    private JTextField phoneField;
+    private JTextArea obsTextArea;
     private JButton limpiarButton;
     private JButton guardarButton;
     private JCheckBox allergicCheck;
     private JCheckBox attSpecialCheck;
 
-    private Mascota mascota = new Mascota();
-    private Duenio duenio = new Duenio();
+    private MainForm mainForm;
+    private Controller controller;
 
     public RegistrationForm() {
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Registro de Mascotas");
         setContentPane(contentPane);
         setResizable(false);
         pack();
 
+        // HACER VISIBLE MainForm CUANDO SE CIERRA LA VENTANA
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                mainForm = new MainForm();
+                // POSICIÓN de MainForm AL CERRAR VENTANA
+                mainForm.setLocationRelativeTo(contentPane);
+                mainForm.setVisible(true);
+            }
+        });
+
 
         // GUARDAR DATOS DEL FORMULARIO
         guardarButton.addActionListener(e -> {
-            mascota.setNombreMascota(nombreMascotaField.getText());
-            mascota.setRaza(razaField.getText());
-            mascota.setColor(colorField.getText());
-            mascota.setAlergico(allergicCheck.isSelected());
-            mascota.setAtencionEspecial(attSpecialCheck.isSelected());
-            mascota.setObservacion(observacionesTextArea.getText());
-            duenio.setNombreDuenio(nombreDuenioField.getText());
-            duenio.setTelefono(telefonoField.getText());
-            mascota.setDuenio(duenio);
+            controller = new Controller();
+            String namePet = namePetField.getText();
+            String race = raceField.getText();
+            String color = colorField.getText();
+            Boolean allergic = allergicCheck.isSelected();
+            Boolean attSpecial = attSpecialCheck.isSelected();
+            String obs = obsTextArea.getText();
+            String own = ownField.getText();
+            String phone = phoneField.getText();
 
-            controller.save(mascota);
+            controller.saveMascota(namePet, race, color, allergic, attSpecial, obs, own, phone);
 
-            JOptionPane.showMessageDialog(contentPane, "Registro guardado exitosamente");
+            JOptionPane.showMessageDialog(null, "Registro guardado exitosamente");
+            limpiarCampos();
+
         });
 
         // LIMPIAR CAMPOS DEL FORMULARIO
         limpiarButton.addActionListener(e -> {
-            nombreMascotaField.setText("");
-            razaField.setText("");
-            colorField.setText("");
-            allergicCheck.setSelected(false);
-            attSpecialCheck.setSelected(false);
-            nombreDuenioField.setText("");
-            telefonoField.setText("");
-            observacionesTextArea.setText("");
+            limpiarCampos();
         });
+    }
+
+    private void limpiarCampos() {
+        namePetField.setText("");
+        raceField.setText("");
+        colorField.setText("");
+        allergicCheck.setSelected(false);
+        attSpecialCheck.setSelected(false);
+        ownField.setText("");
+        phoneField.setText("");
+        obsTextArea.setText("");
     }
 }
