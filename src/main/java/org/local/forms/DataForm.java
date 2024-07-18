@@ -19,11 +19,11 @@ public class DataForm extends JFrame {
     private Controller controller;
 
     public DataForm() {
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Consultar registro");
         setContentPane(contentPane);
         setResizable(false);
         pack();
+        loadTable();
 
         addWindowListener(new WindowAdapter() {
             @Override

@@ -61,9 +61,7 @@ public class RegistrationForm extends JFrame {
         });
 
         // LIMPIAR CAMPOS DEL FORMULARIO
-        limpiarButton.addActionListener(e -> {
-            limpiarCampos();
-        });
+        limpiarButton.addActionListener(e -> limpiarCampos());
     }
 
     private void limpiarCampos() {

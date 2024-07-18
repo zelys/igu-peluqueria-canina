@@ -8,15 +8,10 @@ import java.awt.event.WindowEvent;
 
 public class MainForm extends JFrame {
     private JPanel contentPane;
-    private JPanel titlePane;
-    private JPanel imgPane;
-    private JLabel imgLabel;
-    private JPanel buttonPane;
     private JButton btnRegistroMascota;
     private JButton btnConsultaRegistro;
     private JButton salirButton;
 
-    private Controller controller = new Controller();
     private DataForm dataForm;
     private RegistrationForm registrationForm;
 
@@ -30,7 +25,7 @@ public class MainForm extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                controller.close();
+                closeController();
             }
         });
 
@@ -56,9 +51,13 @@ public class MainForm extends JFrame {
 
         // FUNCIÓN BOTÓN SALIR
         salirButton.addActionListener(e -> {
-            controller.close();
+            closeController();
             System.exit(0);
         });
+    }
 
+    public void closeController() {
+        Controller controller = new Controller();
+        controller.close();
     }
 }
