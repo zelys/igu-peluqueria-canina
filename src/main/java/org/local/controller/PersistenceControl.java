@@ -7,18 +7,42 @@ import java.util.List;
 
 public class PersistenceControl {
 
-    static MascotaRepository mascotaRepository = new MascotaRepository();
+    MascotaRepository mascotaRepository = new MascotaRepository();
+
+    public PersistenceControl() {
+
+    }
 
     public void save(Mascota mascota) {
         mascotaRepository.addMascota(mascota);
         mascotaRepository.close();
     }
 
-    public List<Mascota> getDatos() {
+    public List<Mascota> getDataList() {
         return mascotaRepository.findAllMascotas();
     }
 
+    public Mascota getMascota(Long id) {
+        return mascotaRepository.findMascota(id);
+    }
+
     public void remove(Long row) {
-        mascotaRepository.deleteMascota(row);
+        mascotaRepository.remove(row);
+    }
+
+    public void updateMascota(Mascota mascota) {
+        mascotaRepository.update(mascota);
+    }
+
+    public void updateMascota(
+            String namePet,
+            String race,
+            String color,
+            Boolean allergic,
+            Boolean attSpecial,
+            String obs,
+            String own,
+            String phone
+    ) {
     }
 }

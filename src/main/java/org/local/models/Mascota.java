@@ -8,7 +8,6 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "mascotas")
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
@@ -24,7 +23,7 @@ public class Mascota {
     @Column(columnDefinition = "TINYINT")
     private Boolean atencionEspecial;
     @Column(columnDefinition = "TEXT")
-    private String observaciones;
+    private String observacion;
 
     private LocalDate fechaRegistro = LocalDate.now();
     private LocalDate fechaModificacion = LocalDate.now();
@@ -32,11 +31,18 @@ public class Mascota {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Duenio duenio;
 
-    public void setAlergico(String alergico) {
-        this.alergico = alergico.equalsIgnoreCase("SI");
-    }
-
-    public void setAtencionEspecial(String atencionEspecial) {
-        this.atencionEspecial = atencionEspecial.equalsIgnoreCase("SI");
+    public Mascota(String nombreMascota, String raza, String color, Boolean alergico,
+                   Boolean atencionEspecial, String observacion, LocalDate fechaRegistro,
+                   LocalDate fechaModificacion, Duenio duenio
+    ) {
+        this.nombreMascota = nombreMascota;
+        this.raza = raza;
+        this.color = color;
+        this.alergico = alergico;
+        this.atencionEspecial = atencionEspecial;
+        this.observacion = observacion;
+        this.fechaRegistro = fechaRegistro;
+        this.fechaModificacion = fechaModificacion;
+        this.duenio = duenio;
     }
 }

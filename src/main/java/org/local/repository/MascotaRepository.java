@@ -16,6 +16,7 @@ public class MascotaRepository {
         this.em = this.eMF.createEntityManager();
     }
 
+    // CREAR UN NUEVO REGISTRO
     public void addMascota(Mascota mascota) {
         EntityTransaction transaction = this.em.getTransaction();
         try {
@@ -30,30 +31,33 @@ public class MascotaRepository {
         }
     }
 
-    public Mascota findMascota(Long id) {
-        return this.em.find(Mascota.class, id);
-    }
-
-    public Mascota updateMascota(Mascota mascota) {
+    // ACTUALIZAR REGISTRO
+    public void update(Mascota mascota) {
         this.em.getTransaction().begin();
         this.em.merge(mascota);
         this.em.getTransaction().commit();
-        return mascota;
     }
 
-    public void deleteMascota(Long id) {
+    // ELIMINAR REGISTRO
+    public void remove(Long id) {
         this.em.getTransaction().begin();
         Mascota mascota = this.em.find(Mascota.class, id);
         this.em.remove(mascota);
         this.em.getTransaction().commit();
     }
 
+    // TRAER TODOS LOS REGISTROS
+    public List<Mascota> findAllMascotas() {
+        return this.em.createQuery("from Mascota", Mascota.class).getResultList();
+    }
+
+    // TRAER REGISTRO ESPECIFICO
+    public Mascota findMascota(Long id) {
+        return this.em.find(Mascota.class, id);
+    }
+
     public void close() {
         this.em.close();
         this.eMF.close();
-    }
-
-    public List<Mascota> findAllMascotas() {
-        return this.em.createQuery("from Mascota", Mascota.class).getResultList();
     }
 }

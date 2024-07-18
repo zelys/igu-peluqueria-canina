@@ -11,7 +11,7 @@
       <focusable value="true"/>
       <inheritsPopupMenu value="false"/>
       <opaque value="true"/>
-      <preferredSize width="600" height="400"/>
+      <preferredSize width="600" height="420"/>
       <requestFocusEnabled value="true"/>
       <verifyInputWhenFocusTarget value="true"/>
       <visible value="true"/>

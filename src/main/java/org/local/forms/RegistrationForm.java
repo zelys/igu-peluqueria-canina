@@ -15,32 +15,33 @@ public class RegistrationForm extends JFrame {
     private JTextField nombreMascotaField;
     private JTextField razaField;
     private JTextField colorField;
-    private JComboBox alergicoComboBox;
-    private JComboBox ateEspecialComboBox;
     private JTextField nombreDuenioField;
     private JTextField telefonoField;
     private JTextArea observacionesTextArea;
     private JButton limpiarButton;
     private JButton guardarButton;
+    private JCheckBox allergicCheck;
+    private JCheckBox attSpecialCheck;
+
+    private Mascota mascota = new Mascota();
+    private Duenio duenio = new Duenio();
 
     public RegistrationForm() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Registro de Mascotas");
         setContentPane(contentPane);
+        setResizable(false);
         pack();
-        setVisible(true);
 
 
         // GUARDAR DATOS DEL FORMULARIO
         guardarButton.addActionListener(e -> {
-            Mascota mascota = new Mascota();
-            Duenio duenio = new Duenio();
             mascota.setNombreMascota(nombreMascotaField.getText());
             mascota.setRaza(razaField.getText());
             mascota.setColor(colorField.getText());
-            mascota.setAlergico(alergicoComboBox.getSelectedItem().toString());
-            mascota.setAtencionEspecial(ateEspecialComboBox.getSelectedItem().toString());
-            mascota.setObservaciones(observacionesTextArea.getText());
+            mascota.setAlergico(allergicCheck.isSelected());
+            mascota.setAtencionEspecial(attSpecialCheck.isSelected());
+            mascota.setObservacion(observacionesTextArea.getText());
             duenio.setNombreDuenio(nombreDuenioField.getText());
             duenio.setTelefono(telefonoField.getText());
             mascota.setDuenio(duenio);
@@ -55,8 +56,8 @@ public class RegistrationForm extends JFrame {
             nombreMascotaField.setText("");
             razaField.setText("");
             colorField.setText("");
-            alergicoComboBox.setSelectedIndex(0);
-            ateEspecialComboBox.setSelectedIndex(0);
+            allergicCheck.setSelected(false);
+            attSpecialCheck.setSelected(false);
             nombreDuenioField.setText("");
             telefonoField.setText("");
             observacionesTextArea.setText("");

@@ -8,7 +8,6 @@ import java.util.List;
 @Entity
 @Table(name = "duenios")
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
@@ -20,4 +19,8 @@ public class Duenio {
     private String nombreDuenio;
     private String telefono;
 
+    public Duenio(String nombreDuenio, String telefono) {
+        this.nombreDuenio = nombreDuenio;
+        this.telefono = telefono;
+    }
 }
