@@ -1,5 +1,7 @@
 package org.local.forms;
 
+import org.local.controller.Controller;
+
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -14,6 +16,7 @@ public class MainForm extends JFrame {
     private JButton btnConsultaRegistro;
     private JButton salirButton;
 
+    private Controller controller = new Controller();
     private DataForm dataForm;
     private RegistrationForm registrationForm;
 
@@ -23,6 +26,13 @@ public class MainForm extends JFrame {
         setContentPane(contentPane);
         setResizable(false);
         pack();
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                controller.close();
+            }
+        });
 
         // BOTÓN REGISTRAR MASCOTA
         btnRegistroMascota.addActionListener(e -> {
@@ -45,7 +55,10 @@ public class MainForm extends JFrame {
         });
 
         // FUNCIÓN BOTÓN SALIR
-        salirButton.addActionListener(e -> System.exit(0));
+        salirButton.addActionListener(e -> {
+            controller.close();
+            System.exit(0);
+        });
 
     }
 }

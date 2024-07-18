@@ -47,4 +47,8 @@ public class Controller {
     public List<Mascota> listMascotas() {
         return control.listMascotas();
     }
+
+    public void close() {
+        control.close();
+    }
 }

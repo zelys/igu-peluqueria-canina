@@ -11,7 +11,6 @@ public class PersistenceControl {
 
     public void save(Mascota mascota) {
         mascotaRepository.addMascota(mascota);
-        mascotaRepository.close();
     }
 
     public List<Mascota> listMascotas() {
@@ -30,4 +29,7 @@ public class PersistenceControl {
         mascotaRepository.update(mascota);
     }
 
+    public void close() {
+        mascotaRepository.close();
+    }
 }
